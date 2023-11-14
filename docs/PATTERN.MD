@@ -12,6 +12,10 @@ when something goes wrong to prevent further damage.
 - **Half-Open State:** After a cooldown period, the circuit breaker transitions to a half-open state, allowing a limited
   number of requests to pass through. If they succeed, the breaker switches back to closed; otherwise, it remains open.
 
+### Diagram
+
+![imagen](./Sequence.png)
+
 ## Quality Attributes
 
 - **Fault Tolerance:** Enhances the system's ability to withstand and recover from faults.
