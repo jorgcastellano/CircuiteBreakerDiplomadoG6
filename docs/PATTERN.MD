@@ -26,7 +26,6 @@ when something goes wrong to prevent further damage.
 
 - **Complexity:** Introducing a circuit breaker adds complexity to the system, requiring careful configuration and
   maintenance.
-- **Maintenance:** Circuit breakers must be inspected and maintained regularly to ensure their proper functioning.
 
 ## When to Use
 
