@@ -7,6 +7,6 @@ export class PostsController {
     }
 
     async getPost( id: any ): Promise<AxiosResponse<string[]>> {
-        return axios.get('https://jsonplaceholder.typicode.com/posts/' + id);
+        return axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`);
     }
 }

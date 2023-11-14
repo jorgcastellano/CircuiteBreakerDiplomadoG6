@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios/index";
+import { AxiosResponse } from "axios/index";
 
 enum CircuitBreakerState {
     Closed,
@@ -7,6 +7,7 @@ enum CircuitBreakerState {
 }
 
 export class CircuitBreakerService {
+
     private state: CircuitBreakerState = CircuitBreakerState.Closed;
     private failureCount: number = 0;
     private readonly failureThreshold: number = 3;
@@ -28,6 +29,7 @@ export class CircuitBreakerService {
                 this.tryToReset();
                 throw new Error('El Circuit Breaker está abierto. Las solicitudes no se están procesando.');
             case CircuitBreakerState.HalfOpen:
+                console.log('Circuit Breaker está medio abierto. Intentando enviar nueva solicitud...');
                 try {
                     const response = await apiCall();
                     this.onSuccess();
@@ -42,6 +44,7 @@ export class CircuitBreakerService {
     private onSuccess() {
         this.failureCount = 0;
         this.lastFailureTime = null;
+        this.state = CircuitBreakerState.Closed;
     }
 
     private onFailure() {
@@ -56,9 +59,7 @@ export class CircuitBreakerService {
     }
 
     private tryToReset() {
-        if (this.lastFailureTime && Date.now() - this.lastFailureTime > this.resetTimeout) {
+        if (this.lastFailureTime && Date.now() - this.lastFailureTime > this.resetTimeout)
             this.state = CircuitBreakerState.HalfOpen;
-            console.log('Circuit Breaker está medio abierto. Envíe una nueva solicitud de prueba...');
-        }
     }
 }

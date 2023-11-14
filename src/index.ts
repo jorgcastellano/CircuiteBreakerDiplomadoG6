@@ -1,5 +1,4 @@
 import express, {Express, Request, Response} from 'express';
-import { AxiosResponse } from 'axios';
 import { PostsController } from "./controllers/PostsController"
 import { CircuitBreakerService } from "./services/CircuitBreakerService"
 
