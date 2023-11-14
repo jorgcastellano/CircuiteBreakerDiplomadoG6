@@ -1,0 +1,44 @@
+@startuml
+actor Client
+participant Server
+
+== Closed State (Normal Operation) ==
+Client -> Server: Request
+activate Server
+Server -> Server: Check Circuit Status
+note over Server: Circuit is Closed,\nallowing the request
+Server -> Service: Forward Request
+activate Service
+Service --> Server: Response
+deactivate Service
+Server --> Client: Response
+deactivate Server
+
+|||
+
+== Open State (Circuit Breaker Preventing Requests) ==
+Client -> Server: Request
+activate Server
+Server -> Server: Check Circuit Status
+note over Server: Circuit is Open,\nblocking the request
+Server --> Client: Circuit Open\nNo Response
+deactivate Server
+
+
+|||
+
+== Half-Open State (Testing the Circuit) ==
+Client -> Server: Request
+activate Server
+Server -> Server: Check Circuit Status
+note over Server: Circuit is Half-Open,\nallowing a test request
+Server -> Service: Forward Request
+activate Service
+Service --> Server: Response
+Server -> Server: Close the Circuit
+deactivate Service
+Server --> Client: Response
+deactivate Server
+
+
+@enduml
